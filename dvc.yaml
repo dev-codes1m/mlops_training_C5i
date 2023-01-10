@@ -1,7 +1,7 @@
 stages:
   load_data:
     cmd: python src/load_data.py --config=params.yaml
-    deps:
+    deps: 
     - src/get_data.py
     - src/load_data.py
     - source_code/insurance_course5i.csv
