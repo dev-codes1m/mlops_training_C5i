@@ -10,6 +10,9 @@ from sklearn.linear_model import ElasticNet
 import joblib
 import json
 import numpy as np
+import mlflow
+from urllib.parse import urlparse
+
 
 def eval_metrics(actual,pred):
     rmse = np.sqrt(mean_squared_error(actual,pred))
@@ -39,41 +42,30 @@ def train_and_evaluate(config_path):
 
     ########################################################
 
-    lr = ElasticNet(alpha=alpha,l1_ratio=l1_ratio,random_state=random_state)
-    lr.fit(train_x,train_y)
-
-    predicted_qualities = lr.predict(test_x)
-
-    (rmse,mae,r2) = eval_metrics(test_y,predicted_qualities)
+    mlflow_config = config["mlflow_config"]
+    remote_server_uri = mlflow_config["remote_server_uri"]
+    mlflow.set_tracking_uri(remote_server_uri)
+    mlflow.set_experiment(mlflow_config["experiment_name"])
     
-    # print("RMSE:%s",rmse)
-    # print("MAE:%s",mae)
-    # print("R2:%s",r2)
+    with mlflow.start_run(run_name= mlflow_config["run_name"]) as mlops_run:
+        lr = ElasticNet(alpha=alpha,random_state=random_state,l1_ratio=l1_ratio)
+        lr.fit(train_x,train_y)
+        predicted_qualities = lr.predict(test_x)
+        (rmse,mae,r2) = eval_metrics(test_y,predicted_qualities)
+        mlflow.log_param("alpha",alpha)
+        mlflow.log_param("l1_ratio",l1_ratio)
 
-    #########################################################################
+        mlflow.log_metric("rmse",rmse)
+        mlflow.log_metric("mae",mae)
+        mlflow.log_metric("r2",r2)
 
-    score_file = config["reports"]["scores"]
-    params_file = config["reports"]["params"]
+        tracting_url_type_store = urlparse(mlflow.get_artifact_uri()).scheme
 
-    with open(score_file,"w") as f:
-        scores = {
-            "RMSE":rmse,
-            "MAE":mae,
-            "R2_SCORE":r2
-        }
-        json.dump(scores,f,indent=4)
+        if tracting_url_type_store !="file":
+            mlflow.sklearn.log_model(lr,"model",registered_model_name = mlflow_config["registered_model_name"])
+        else:
+            mlflow.sklearn.load_model(lr,"model")
     
-    with open(params_file,"w") as f:
-        params = {
-            "Alpha":alpha,
-            "l1_ratio":l1_ratio
-        }
-        json.dump(params,f,indent=4)
-    
-    os.makedirs(model_dir,exist_ok=True)
-    model_path = os.path.join(model_dir,"model.joblib")
-    joblib.dump(lr,model_path)
-
 
 
 
