@@ -1,0 +1,15 @@
+cmd: python src/load_data.py --config=params.yaml
+deps:
+- path: source_code/insurance_course5i.csv
+  md5: 0901b434e74ea2297dc3aa943d12a4f9
+  size: 38036
+- path: src/get_data.py
+  md5: 5f0dfd76d5dafaaeea82d5b85250e720
+  size: 696
+- path: src/load_data.py
+  md5: 7b76f758cefa5250998bba79149e740d
+  size: 694
+outs:
+- path: data/raw/insurance_course5i.csv
+  md5: 0901b434e74ea2297dc3aa943d12a4f9
+  size: 38036
