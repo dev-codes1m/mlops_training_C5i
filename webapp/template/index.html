@@ -3,7 +3,7 @@
 <head>
 <title>Medical Expenses</title>
 <style>
-    .button{
+    .button{ 
         border:none;
         color:white;
         padding:10px 20px;
@@ -13,23 +13,19 @@
         font-size:14px;
         margin:4px 2px;
         cursor:pointer;
-
-
-
     }
-    .button1{
-        background-color:#4caf50;
-
-    }
-    .button2{background-color:#008cba}
-
+    .button1{background-color: #4caf50;}
+    .button2{background-color: #008cba;}
 </style>
 </head>
-<body style="background-color: powderblue">
-<center><h1><span style="color: #FF0000">Medical Expenses App</span></h1>
-    <center><h3>Please Enter the Data</h3></center><br>
-    <form action="{%url 'result' %}">
-        {%csrf_token %}
+<body style="background-color:powderblue">
+
+<center><h1><span style="color:#FF0000">Medical Expenses App </span></h1>
+    <center><h3>Please Enter the Data</h3></center> <br>
+
+    <form action="{% url 'result' %}">
+        {% csrf_token %}
+
         <table align="center">
             <tr><td>Age:<td><input type="text" required name="age"></td></tr>
             <tr><td>Sex:<td><input type="text" required name="sex"></td></tr>
@@ -41,19 +37,16 @@
 
         <center><button type="submit" name="" value="submit" class="button button1">Submit</button></center>
         <center><button type="reset" name="" value="reset" class="button button1">Reset</button></center>
-
-
-        
     </form>
 
     {% if answer %}
 
-    <center><h2 style="color:#FF0000"> The Medical Expenses is {{answer}} Dollars</h2></center>
-    <center><h3 style="color: #009900">Thanks for using Medical App</h3></center>
-    
+    <center><h2 style="color:#FF6600"> The Medical Expenses is {{answer}} Dollars</h2>
+    <h3 style="color:#009900">Thanks for using Medical App</h3></h2>
+    </center>
 
     {% endif %}
 
-    
+</center>
 </body>
 </html>
