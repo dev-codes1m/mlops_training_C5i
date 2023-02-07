@@ -32,3 +32,9 @@ stages:
     - path: data/processed/train_insurance_course5i.csv
       md5: 640b81740af906b0621c1862be5b5085
       size: 30438
+  log_production_model:
+    cmd: python src/log_production_model.py --config=params.yaml
+    deps:
+    - path: src/log_production_model.py
+      md5: 3e0320bcf55e0f723d0966405ddbff94
+      size: 1858

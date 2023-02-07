@@ -17,7 +17,7 @@ split_data:
 estimators:
   ElasticNet:
     params:
-      alpha: 0.9
+      alpha: 0.96
       l1_ratio: 0.9
 
 model_dir: models
@@ -33,5 +33,5 @@ mlflow_config:
   experiment_name: ElasticNet_Expense
   run_name: mlops
   registered_model_name: ElasticNetMedicalExpenses
-  remote_server_uri: http://ec2-65-2-171-3.ap-south-1.compute.amazonaws.com:5000/
+  remote_server_uri: http://127.0.0.1:5000/
 

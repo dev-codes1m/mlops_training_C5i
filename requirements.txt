@@ -13,3 +13,4 @@ argparse
 mlflow
 django
 psycopg2
+aws-ecs-services
