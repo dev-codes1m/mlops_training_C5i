@@ -1,4 +1,4 @@
-FROM python:3.10-slim
+FROM python:3.10-slim-buster
 ENV PYTHONDONTWRITECODE 1
 ENV PYTHONBUFFERED 1
 RUN mkdir /webapp
