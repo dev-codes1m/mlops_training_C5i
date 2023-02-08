@@ -8,7 +8,7 @@ COPY requirements.txt /webapp/
 
 RUN pip install -r requirements.txt
 COPY webapp /webapp/
-EXPOSE 80
+EXPOSE 8080
 
 CMD ["python","./webapp/manage.py","runserver","0.0.0.0:8000"]
 
