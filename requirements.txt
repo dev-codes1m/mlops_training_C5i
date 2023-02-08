@@ -12,5 +12,5 @@ scikit-learn
 argparse
 mlflow
 django
-psycopg2
+psycopg2-binary
 aws-ecs-services
